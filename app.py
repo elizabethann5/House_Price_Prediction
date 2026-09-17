@@ -22,8 +22,9 @@ area = st.number_input(
 floors = st.number_input(
     "Total Floors",
     min_value=1,
-    max_value=100,
-    value=5
+    max_value=10,
+    value=5,
+    step = 1
 )
 
 bedrooms = st.number_input(
