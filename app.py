@@ -35,7 +35,27 @@ bedrooms = st.number_input(
 )
 
 # Prediction button
+
 if st.button("Predict Price"):
+
+    if area < 600:
+        st.error("⚠️ Area must be at least 600 sq. ft.")
+
+    elif floors > 12:
+        st.error("⚠️ Total floors cannot exceed 12.")
+
+    else:
+        new_data = pd.DataFrame({
+            'Area_Sq_Ft': [area],
+            'Total_Floors': [floors],
+            'Bedrooms': [bedrooms]
+        })
+
+        prediction = model.predict(new_data)
+
+        st.success(
+            f"Predicted House Price: ₹{prediction[0]:.2f} Lakhs"
+        )
 
     # Prepare input data in the same order as training
     new_data = pd.DataFrame({
