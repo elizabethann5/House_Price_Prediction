@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import joblib
@@ -20,6 +19,11 @@ area = st.number_input(
     step=1
 )
 
+# Live warning if area is less than 600
+is_invalid_area = area < 600
+if is_invalid_area:
+    st.warning("⚠️ Area must be at least 600 sq. ft. to predict price.")
+
 floors = st.number_input(
     "Total Floors",
     min_value=1,
@@ -36,15 +40,10 @@ bedrooms = st.number_input(
     step=1
 )
 
-# Prediction button
-if st.button("Predict Price"):
-
-    if area < 600:
-        st.error("⚠️ Area must be at least 600 sq. ft.")
-
-    elif floors > 12:
+# Prediction button (disabled automatically if area is below 600)
+if st.button("Predict Price", disabled=is_invalid_area):
+    if floors > 12:
         st.error("⚠️ Total floors cannot exceed 12.")
-
     else:
         # Prepare input data
         new_data = pd.DataFrame({
@@ -57,6 +56,4 @@ if st.button("Predict Price"):
         prediction = model.predict(new_data)
 
         # Display result
-        st.success(
-            f"Predicted House Price: ₹{prediction[0]:.2f} Lakhs"
-        )
+        st.success(f"Predicted House Price: ₹{prediction[0]:.2f} Lakhs")
