@@ -20,14 +20,14 @@ area = st.number_input(
 )
 
 # Live warning if area is less than 600
-is_invalid_area = area < 600
+is_invalid_area = area <= 600
 if is_invalid_area:
     st.warning("⚠️ Area must be at least 600 sq. ft. to predict price.")
 
 floors = st.number_input(
     "Total Floors",
     min_value=1,
-    max_value=10,
+    max_value=20,
     value=5,
     step=1
 )
@@ -42,7 +42,7 @@ bedrooms = st.number_input(
 
 # Prediction button (disabled automatically if area is below 600)
 if st.button("Predict Price", disabled=is_invalid_area):
-    if floors > 12:
+    if floors >= 10:
         st.error("⚠️ Total floors cannot exceed 12.")
     else:
         # Prepare input data
