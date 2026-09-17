@@ -14,9 +14,10 @@ st.write("Enter the house details to predict its price.")
 # User inputs
 area = st.number_input(
     "Area (Square Feet)",
-    min_value=600,
+    min_value=0,
     max_value=10000,
-    value=2000
+    value=2000,
+    step=1
 )
 
 floors = st.number_input(
@@ -24,18 +25,18 @@ floors = st.number_input(
     min_value=1,
     max_value=10,
     value=5,
-    step = 1
+    step=1
 )
 
 bedrooms = st.number_input(
     "Number of Bedrooms",
     min_value=1,
     max_value=20,
-    value=3
+    value=3,
+    step=1
 )
 
 # Prediction button
-
 if st.button("Predict Price"):
 
     if area < 600:
@@ -45,29 +46,17 @@ if st.button("Predict Price"):
         st.error("⚠️ Total floors cannot exceed 12.")
 
     else:
+        # Prepare input data
         new_data = pd.DataFrame({
             'Area_Sq_Ft': [area],
             'Total_Floors': [floors],
             'Bedrooms': [bedrooms]
         })
 
+        # Predict price
         prediction = model.predict(new_data)
 
+        # Display result
         st.success(
             f"Predicted House Price: ₹{prediction[0]:.2f} Lakhs"
         )
-
-    # Prepare input data in the same order as training
-    new_data = pd.DataFrame({
-        'Area_Sq_Ft': [area],
-        'Total_Floors': [floors],
-        'Bedrooms': [bedrooms]
-    })
-
-    # Predict price
-    prediction = model.predict(new_data)
-
-    # Display result
-    st.success(
-        f"Predicted House Price: ₹{prediction[0]:.2f} Lakhs"
-    )
