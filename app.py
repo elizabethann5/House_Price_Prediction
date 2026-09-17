@@ -14,7 +14,7 @@ st.write("Enter the house details to predict its price.")
 # User inputs
 area = st.number_input(
     "Area (Square Feet)",
-    min_value=100,
+    min_value=600,
     max_value=10000,
     value=2000
 )
