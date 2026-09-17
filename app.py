@@ -20,7 +20,7 @@ area = st.number_input(
 )
 
 # Live warning if area is less than 600
-is_invalid_area = area <= 600
+is_invalid_area = area < 600
 if is_invalid_area:
     st.warning("⚠️ Area must be at least 600 sq. ft. to predict price.")
 
